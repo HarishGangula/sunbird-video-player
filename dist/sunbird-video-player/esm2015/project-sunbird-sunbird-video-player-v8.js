@@ -1,0 +1,12 @@
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Generated bundle index. Do not edit.
+ */
+export { SunbirdVideoPlayerService, SunbirdVideoPlayerComponent, SunbirdVideoPlayerModule } from './public-api';
+export { VideoPlayerComponent as ɵc } from './lib/components/video-player/video-player.component';
+export { UtilService as ɵa } from './lib/services/util.service';
+export { ViewerService as ɵb } from './lib/services/viewer.service';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHJvamVjdC1zdW5iaXJkLXN1bmJpcmQtdmlkZW8tcGxheWVyLXY4LmpzIiwic291cmNlUm9vdCI6Im5nOi8vQHByb2plY3Qtc3VuYmlyZC9zdW5iaXJkLXZpZGVvLXBsYXllci12OC8iLCJzb3VyY2VzIjpbInByb2plY3Qtc3VuYmlyZC1zdW5iaXJkLXZpZGVvLXBsYXllci12OC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7O0FBSUEsaUdBQWMsY0FBYyxDQUFDO0FBRTdCLE9BQU8sRUFBQyxvQkFBb0IsSUFBSSxFQUFFLEVBQUMsTUFBTSxzREFBc0QsQ0FBQztBQUNoRyxPQUFPLEVBQUMsV0FBVyxJQUFJLEVBQUUsRUFBQyxNQUFNLDZCQUE2QixDQUFDO0FBQzlELE9BQU8sRUFBQyxhQUFhLElBQUksRUFBRSxFQUFDLE1BQU0sK0JBQStCLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIEdlbmVyYXRlZCBidW5kbGUgaW5kZXguIERvIG5vdCBlZGl0LlxuICovXG5cbmV4cG9ydCAqIGZyb20gJy4vcHVibGljLWFwaSc7XG5cbmV4cG9ydCB7VmlkZW9QbGF5ZXJDb21wb25lbnQgYXMgybVjfSBmcm9tICcuL2xpYi9jb21wb25lbnRzL3ZpZGVvLXBsYXllci92aWRlby1wbGF5ZXIuY29tcG9uZW50JztcbmV4cG9ydCB7VXRpbFNlcnZpY2UgYXMgybVhfSBmcm9tICcuL2xpYi9zZXJ2aWNlcy91dGlsLnNlcnZpY2UnO1xuZXhwb3J0IHtWaWV3ZXJTZXJ2aWNlIGFzIMm1Yn0gZnJvbSAnLi9saWIvc2VydmljZXMvdmlld2VyLnNlcnZpY2UnOyJdfQ==

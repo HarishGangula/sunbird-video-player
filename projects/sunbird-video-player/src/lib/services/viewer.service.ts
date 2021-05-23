@@ -30,6 +30,7 @@ export class ViewerService {
   public sidebarMenuEvent = new EventEmitter<any>();
   public traceId: string;
   public isAvailableLocally = false;
+  private markers: any;
 
 
   constructor(private videoPlayerService: SunbirdVideoPlayerService,
@@ -46,6 +47,7 @@ export class ViewerService {
     this.artifactMimeType = metadata.mimeType;
     this.isAvailableLocally = metadata.isAvailableLocally;
     this.traceId = config.traceId;
+    this.markers = config.markers;
     if (context.userData) {
       const { userData: { firstName, lastName } } = context;
       this.userName = firstName === lastName ? firstName : `${firstName} ${lastName}`;
@@ -74,6 +76,9 @@ export class ViewerService {
         return [{ src: this.artifactUrl, type: this.artifactMimeType }];
       }
     }
+  }
+  getMarkers() {
+    return this.markers;
   }
 
 

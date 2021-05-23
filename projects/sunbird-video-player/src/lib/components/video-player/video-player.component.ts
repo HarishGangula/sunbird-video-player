@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
-import videojs from 'video.js';
+import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild, ViewEncapsulation, OnDestroy, Input } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { ViewerService } from '../../services/viewer.service';
 
 @Component({
@@ -17,9 +17,10 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
   currentPlayerState = 'none';
   private unlistenTargetMouseMove: () => void;
   private unlistenTargetTouchStart: () => void;
+  @Input() events: Observable<any>
   @ViewChild('target', { static: true }) target: ElementRef;
   @ViewChild('controlDiv', { static: true }) controlDiv: ElementRef;
-  player: videojs.Player;
+  player: any;
   totalSeekedLength = 0;
   previousTime = 0;
   currentTime = 0;
@@ -28,6 +29,7 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
   startTime;
   totalSpentTime = 0;
   isAutoplayPrevented = false;
+  private eventsSubscription: Subscription;
 
   constructor(public viewerService: ViewerService, private renderer2: Renderer2) { }
 
@@ -46,6 +48,7 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
       }, function onLoad() {
 
       });
+      this.player.markers(this.viewerService.getMarkers())
       this.registerEvents();
     });
 
@@ -65,6 +68,14 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
     this.viewerService.sidebarMenuEvent.subscribe(event => {
       if (event === 'OPEN_MENU') { this.pause(); }
       if (event === 'CLOSE_MENU') { this.play(); }
+    });
+
+    this.eventsSubscription = this.events.subscribe(({action, data}) => {
+      if(action === 'play') {
+        this.play();
+      } else if(action === 'pause') {
+        this.pause();
+      }
     });
   }
 

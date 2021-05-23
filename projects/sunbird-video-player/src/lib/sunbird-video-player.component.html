@@ -1,7 +1,7 @@
 <div class="sunbird-video-player-container" #videoPlayer>
       <sb-player-side-menu-icon class="sb-player-side-menu-icon notVisible" (sidebarMenuEvent)="viewerService.raiseHeartBeatEvent($event); sidebarMenuEvent($event);"
             *ngIf="viewState ==='player'" [ngClass]="{'isVisible': showControls}"></sb-player-side-menu-icon>
-      <video-player *ngIf="viewState === 'player'">
+      <video-player *ngIf="viewState === 'player'" [events]="events">
       </video-player>
       <sb-player-sidebar *ngIf="viewState ==='player'"
        [title]="viewerService.contentName"

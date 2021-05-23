@@ -3,6 +3,7 @@ import {
   HostListener, ElementRef, ViewChild, AfterViewInit, Renderer2, OnDestroy
 } from '@angular/core';
 import { ErrorService , errorCode , errorMessage } from '@project-sunbird/sunbird-player-sdk-v8';
+import { Observable, Subscription } from 'rxjs';
 
 import { PlayerConfig } from './playerInterfaces';
 import { ViewerService } from './services/viewer.service';
@@ -15,6 +16,7 @@ import { SunbirdVideoPlayerService } from './sunbird-video-player.service';
 export class SunbirdVideoPlayerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() playerConfig: PlayerConfig;
+  @Input() events: Observable<{action: string, data: any}>
   @Output() playerEvent: EventEmitter<object>;
   @Output() telemetryEvent: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('videoPlayer', { static: true }) videoPlayerRef: ElementRef;
@@ -32,6 +34,7 @@ export class SunbirdVideoPlayerComponent implements OnInit, AfterViewInit, OnDes
   private unlistenTouchStart: () => void;
   private unlistenMouseMove: () => void;
   isPaused = false;
+  
 
   constructor(
     public videoPlayerService: SunbirdVideoPlayerService,
@@ -103,6 +106,8 @@ export class SunbirdVideoPlayerComponent implements OnInit, AfterViewInit, OnDes
     this.sideMenuConfig = { ...this.sideMenuConfig, ...this.playerConfig.config.sideMenu };
     this.viewerService.initialize(this.playerConfig);
     this.videoPlayerService.initialize(this.playerConfig);
+
+
   }
 
   sidebarMenuEvent(event) {

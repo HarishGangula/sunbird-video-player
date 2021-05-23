@@ -1,0 +1,32 @@
+{
+  "name": "@project-sunbird/sunbird-video-player-v8",
+  "version": "4.0.2",
+  "peerDependencies": {
+    "@angular/common": "^8.0.0",
+    "@angular/core": "^8.0.0",
+    "@angular/forms": "^8.0.0",
+    "@filmgardi/videojs-markers": "^1.0.2",
+    "@project-sunbird/client-services": "^3.4.11",
+    "@project-sunbird/sb-styles": "0.0.7",
+    "video.js": "7.5.5"
+  },
+  "dependencies": {
+    "@project-sunbird/sunbird-player-sdk-v8": "4.0.5",
+    "tslib": "^1.9.0"
+  },
+  "devdependencies": {
+    "video.js": "7.5.5",
+    "@project-sunbird/client-services": "^3.4.11",
+    "@project-sunbird/sb-styles": "0.0.7"
+  },
+  "main": "bundles/project-sunbird-sunbird-video-player-v8.umd.js",
+  "module": "fesm5/project-sunbird-sunbird-video-player-v8.js",
+  "es2015": "fesm2015/project-sunbird-sunbird-video-player-v8.js",
+  "esm5": "esm5/project-sunbird-sunbird-video-player-v8.js",
+  "esm2015": "esm2015/project-sunbird-sunbird-video-player-v8.js",
+  "fesm5": "fesm5/project-sunbird-sunbird-video-player-v8.js",
+  "fesm2015": "fesm2015/project-sunbird-sunbird-video-player-v8.js",
+  "typings": "project-sunbird-sunbird-video-player-v8.d.ts",
+  "metadata": "project-sunbird-sunbird-video-player-v8.metadata.json",
+  "sideEffects": false
+}

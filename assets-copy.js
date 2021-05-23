@@ -3,6 +3,7 @@ const fs = require('fs-extra');
     try {
       var source = "projects/sunbird-video-player/node_modules/@project-sunbird/sunbird-player-sdk-v8/lib/assets";
         const dest = "dist/sunbird-video-player/lib/assets/";
+        var libsource = "projects/sunbird-video-player/src/lib/assets";
         const isAssetsExists = await fs.pathExists(dest)
 
         if (isAssetsExists) {
@@ -10,7 +11,7 @@ const fs = require('fs-extra');
         }
         await fs.ensureDir(dest);
         await fs.copy(source, dest)
-        // await fs.copy(libsource, dest)
+        await fs.copy(libsource, dest)
         console.log('Assets copied successfully')
     } catch (err) {
         console.error("Error while copying assets", err)

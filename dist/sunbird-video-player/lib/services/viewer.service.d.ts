@@ -1,0 +1,43 @@
+import { HttpClient } from '@angular/common/http';
+import { EventEmitter } from '@angular/core';
+import { PlayerConfig } from '../playerInterfaces';
+import { SunbirdVideoPlayerService } from '../sunbird-video-player.service';
+import { UtilService } from './util.service';
+export declare class ViewerService {
+    private videoPlayerService;
+    private utilService;
+    private http;
+    endPageSeen: boolean;
+    timeSpent: string;
+    private version;
+    playerEvent: EventEmitter<any>;
+    contentName: string;
+    showDownloadPopup: boolean;
+    streamingUrl: string;
+    mimeType: string;
+    artifactMimeType: string;
+    userName: string;
+    metaData: any;
+    PlayerLoadStartedAt: number;
+    totalLength: any;
+    currentlength: any;
+    totalSeekedLength: any;
+    artifactUrl: any;
+    visitedLength: any;
+    sidebarMenuEvent: EventEmitter<any>;
+    traceId: string;
+    isAvailableLocally: boolean;
+    private markers;
+    constructor(videoPlayerService: SunbirdVideoPlayerService, utilService: UtilService, http: HttpClient);
+    initialize({ context, config, metadata }: PlayerConfig): void;
+    getPlayerOptions(): Promise<{
+        src: any;
+        type: string;
+    }[]>;
+    getMarkers(): any;
+    pageSessionUpdate(): void;
+    raiseStartEvent(event: any): void;
+    raiseEndEvent(): void;
+    raiseHeartBeatEvent(type: string): void;
+    raiseExceptionLog(errorCode: string, errorType: string, stacktrace: any, traceId: any): void;
+}

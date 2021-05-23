@@ -60,6 +60,7 @@ sideMenu?: {
     showReplay?: boolean;
     showExit?: boolean;
 };
+markers?: any
 [propName: string]: any;
 }
 

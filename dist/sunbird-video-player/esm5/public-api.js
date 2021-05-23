@@ -1,0 +1,11 @@
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/*
+ * Public API Surface of sunbird-video-player
+ */
+export { SunbirdVideoPlayerService } from './lib/sunbird-video-player.service';
+export { SunbirdVideoPlayerComponent } from './lib/sunbird-video-player.component';
+export { SunbirdVideoPlayerModule } from './lib/sunbird-video-player.module';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0Bwcm9qZWN0LXN1bmJpcmQvc3VuYmlyZC12aWRlby1wbGF5ZXItdjgvIiwic291cmNlcyI6WyJwdWJsaWMtYXBpLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7QUFJQSwwQ0FBYyxvQ0FBb0MsQ0FBQztBQUNuRCw0Q0FBYyxzQ0FBc0MsQ0FBQztBQUNyRCx5Q0FBYyxtQ0FBbUMsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbIi8qXG4gKiBQdWJsaWMgQVBJIFN1cmZhY2Ugb2Ygc3VuYmlyZC12aWRlby1wbGF5ZXJcbiAqL1xuXG5leHBvcnQgKiBmcm9tICcuL2xpYi9zdW5iaXJkLXZpZGVvLXBsYXllci5zZXJ2aWNlJztcbmV4cG9ydCAqIGZyb20gJy4vbGliL3N1bmJpcmQtdmlkZW8tcGxheWVyLmNvbXBvbmVudCc7XG5leHBvcnQgKiBmcm9tICcuL2xpYi9zdW5iaXJkLXZpZGVvLXBsYXllci5tb2R1bGUnO1xuIl19
