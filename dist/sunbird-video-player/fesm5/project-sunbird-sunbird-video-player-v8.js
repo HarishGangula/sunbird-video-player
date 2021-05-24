@@ -1012,6 +1012,9 @@ var VideoPlayerComponent = /** @class */ (function () {
             else if (action === 'pause') {
                 _this.pause();
             }
+            else if (action === 'seekTo') {
+                _this.player.currentTime(data.seconds);
+            }
         }));
     };
     /**
