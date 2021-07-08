@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild,
   ViewEncapsulation, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { ViewerService } from '../../services/viewer.service';
-import { QuestionService } from '../../services/question/question.service';
 
 @Component({
   selector: 'video-player',
@@ -32,7 +31,7 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
   totalSpentTime = 0;
   isAutoplayPrevented = false;
 
-  constructor(public viewerService: ViewerService, public questionService: QuestionService, private renderer2: Renderer2) { }
+  constructor(public viewerService: ViewerService, private renderer2: Renderer2) { }
 
   ngAfterViewInit() {
     this.viewerService.getPlayerOptions().then(options => {

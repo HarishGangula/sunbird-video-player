@@ -32,9 +32,8 @@ export class ViewerService {
   public traceId: string;
   public isAvailableLocally = false;
   public interceptionPoints: any;
-  constructor(private videoPlayerService: SunbirdVideoPlayerService,
-    private utilService: UtilService,
-    public questionCursor: QuestionCursor, private http: HttpClient) {
+  constructor(private videoPlayerService: SunbirdVideoPlayerService, private utilService: UtilService,
+              public questionCursor: QuestionCursor, private http: HttpClient) {
     this.PlayerLoadStartedAt = new Date().getTime();
   }
 
