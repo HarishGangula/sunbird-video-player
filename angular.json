@@ -33,6 +33,7 @@
             ],
             "styles": [
               "src/styles.scss",
+              "./quml-carousel.css",
               "node_modules/@project-sunbird/sb-styles/assets/_styles.scss",
               "node_modules/video.js/dist/video-js.min.css",
               "dist/sunbird-video-player/lib/assets/videojs.markers.min.css"
