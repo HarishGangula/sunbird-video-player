@@ -45,7 +45,7 @@ export class AppComponent {
   };
 
   playerEvent(event) {
-    console.log(event);
+    // console.log(event);
   }
 
   telemetryEvent(event) {

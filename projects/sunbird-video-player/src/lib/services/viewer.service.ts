@@ -46,7 +46,23 @@ export class ViewerService {
     this.artifactMimeType = metadata.mimeType;
     this.isAvailableLocally = metadata.isAvailableLocally;
     this.traceId = config.traceId;
-    this.interceptionPoints = metadata.interceptionPoints;
+    this.interceptionPoints = metadata.interceptionPoints || {
+      items: [{
+        type: 'QuestionSet',
+        interceptionPoint: 300,
+        identifier: 'do_113286144302735360169',
+      }, {
+        type: 'QuestionSet',
+        interceptionPoint: 100,
+        identifier: 'do_1132862557288939521118',
+        objectType: 'QuestionSet'
+      }, {
+        type: 'QuestionSet',
+        interceptionPoint: 200,
+        identifier: 'do_1132733955727605761112',
+        objectType: 'QuestionSet'
+      }]
+    };
     if (context.userData) {
       const { userData: { firstName, lastName } } = context;
       this.userName = firstName === lastName ? firstName : `${firstName} ${lastName}`;
@@ -64,7 +80,7 @@ export class ViewerService {
       const basePath = (metadata.streamingUrl) ? (metadata.streamingUrl) : (metadata.basePath || metadata.baseDir)
       this.streamingUrl = `${basePath}/${metadata.artifactUrl}`;
       this.mimeType = metadata.mimeType;
-    } 
+    }
   }
 
   async getPlayerOptions() {
@@ -83,10 +99,10 @@ export class ViewerService {
   }
 
   getMarkers()  {
-    if(this.interceptionPoints) {
+    if (this.interceptionPoints) {
       return this.interceptionPoints.items.map(item => {
-          return { time: item.interceptionPoint, text: "" }
-      })
+        return { time: item.interceptionPoint, text: '', identifier: item.identifier };
+      });
     }
     return null;
   }

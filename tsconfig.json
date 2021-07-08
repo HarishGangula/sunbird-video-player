@@ -29,6 +29,12 @@
       "sunbird-video-player/*": [
         "dist/sunbird-video-player/*"
       ],
+      "@project-sunbird/sunbird-video-player-v9": [
+        "dist/sunbird-video-player"
+      ],
+      "@project-sunbird/sunbird-video-player-v9/*": [
+        "dist/sunbird-video-player/*"
+      ],
       "video.js":[
         "node_modules/video.js"
       ],

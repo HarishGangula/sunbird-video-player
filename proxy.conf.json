@@ -1,0 +1,32 @@
+{
+    "/action/questionset/v1": {
+        "target": "http://localhost:3000",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/action/collection/v1": {
+        "target": "http://localhost:3000",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/action/question/v1": {
+        "target": "http://localhost:3000",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/action": {
+        "target": "http://localhost:3000/action",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/learner": {
+        "target": "http://localhost:3000/learner",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    }
+}

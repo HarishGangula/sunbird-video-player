@@ -11,3 +11,7 @@
             *ngIf="viewState === 'end'"></sb-player-end-page>
       <sb-player-contenterror *ngIf="showContentError"></sb-player-contenterror>
 </div>
+
+<div class="sunbird-video-player-container">
+      <quml-player [QumlPlayerConfig]="QumlPlayerConfig" (playerEvent)="getPlayerEvents($event)" (telemetryEvent)="getTelemetryEvents($event)"></quml-player>
+</div>

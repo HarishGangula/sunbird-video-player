@@ -6,6 +6,7 @@ import { SunbirdVideoPlayerComponent } from './sunbird-video-player.component';
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
 import { ErrorService } from '@project-sunbird/sunbird-player-sdk-v9';
 import { HttpClientModule } from '@angular/common/http';
+import { QumlLibraryModule } from '@project-sunbird/sunbird-quml-player-v9';
 
 @NgModule({
   declarations: [SunbirdVideoPlayerComponent, VideoPlayerComponent],
@@ -13,7 +14,9 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    SunbirdPlayerSdkModule
+    SunbirdPlayerSdkModule,
+    QumlLibraryModule,
+    SunbirdPlayerSdkModule,
   ],
   providers: [ErrorService],
   exports: [SunbirdVideoPlayerComponent , SunbirdPlayerSdkModule]

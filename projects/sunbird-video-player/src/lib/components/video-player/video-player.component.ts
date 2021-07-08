@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { ViewerService } from '../../services/viewer.service';
+import { QuestionService } from '../../services/question/question.service';
+
 @Component({
   selector: 'video-player',
   templateUrl: './video-player.component.html',
@@ -27,7 +29,7 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
   totalSpentTime = 0;
   isAutoplayPrevented = false;
 
-  constructor(public viewerService: ViewerService, private renderer2: Renderer2) { }
+  constructor(public viewerService: ViewerService, public questionService: QuestionService, private renderer2: Renderer2) { }
 
   ngAfterViewInit() {
     this.viewerService.getPlayerOptions().then(options => {
@@ -37,24 +39,31 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
         autoplay: true,
         playbackRates: [0.5, 1, 1.5, 2],
         controlBar: {
-          children: ['playToggle', 'volumePanel', 'durationDisplay', 
+          children: ['playToggle', 'volumePanel', 'durationDisplay',
             'progressControl', 'remainingTimeDisplay',
             'playbackRateMenuButton', 'fullscreenToggle']
         }
       }, function onLoad() {
 
       });
-      let markers = this.viewerService.getMarkers()
+      const markers = this.viewerService.getMarkers();
       if (markers) {
-        this.player.markers( {markers, 
+        this.player.markers( {markers,
           markerStyle: {
             'height': '7px',
             'bottom': '39%',
             'background-color': 'orange'
           },
-          onMarkerReached: (marker) => {
-            console.log(marker)
-          }})
+          onMarkerReached: ({time, text, identifier}) => {
+            console.log(identifier);
+            this.questionService.readQuestion(identifier).subscribe(
+              (response) => {
+                console.log(response);
+              }, (error) => {
+                console.log(error);
+              }
+            );
+          }});
       }
       this.registerEvents();
     });
@@ -108,7 +117,7 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
       this.showPlayButton = false;
       this.viewerService.raiseHeartBeatEvent('PLAY');
       this.isAutoplayPrevented = false;
-    });   
+    });
 
     this.player.on('timeupdate', (data) => {
       this.handleVideoControls(data);

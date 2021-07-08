@@ -7,6 +7,9 @@ import { ErrorService , errorCode , errorMessage } from '@project-sunbird/sunbir
 import { PlayerConfig } from './playerInterfaces';
 import { ViewerService } from './services/viewer.service';
 import { SunbirdVideoPlayerService } from './sunbird-video-player.service';
+
+import { data1 } from './quml-library-data';
+
 @Component({
   selector: 'sunbird-video-player',
   templateUrl: './sunbird-video-player.component.html',
@@ -32,6 +35,9 @@ export class SunbirdVideoPlayerComponent implements OnInit, AfterViewInit, OnDes
   private unlistenTouchStart: () => void;
   private unlistenMouseMove: () => void;
   isPaused = false;
+
+  QumlPlayerConfig = data1;
+
 
   constructor(
     public videoPlayerService: SunbirdVideoPlayerService,
@@ -179,5 +185,13 @@ export class SunbirdVideoPlayerComponent implements OnInit, AfterViewInit, OnDes
     this.unlistenTouchStart();
     this.unlistenMouseMove();
     window.removeEventListener('offline', this.raiseInternetDisconnectionError , true);
+  }
+
+  getPlayerEvents(event) {
+    console.log('get player events', JSON.stringify(event));
+  }
+
+  getTelemetryEvents(event) {
+    console.log('event is for telemetry', JSON.stringify(event));
   }
 }
