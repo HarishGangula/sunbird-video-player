@@ -4,6 +4,7 @@ import { PlayerConfig } from '../playerInterfaces';
 import { SunbirdVideoPlayerService } from '../sunbird-video-player.service';
 import { UtilService } from './util.service';
 import { errorCode , errorMessage } from '@project-sunbird/sunbird-player-sdk-v9';
+import { QuestionCursor } from '@project-sunbird/sunbird-quml-player-v9';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,7 @@ export class ViewerService {
   public interceptionPoints: any;
   constructor(private videoPlayerService: SunbirdVideoPlayerService,
     private utilService: UtilService,
-    private http: HttpClient) {
+    public questionCursor: QuestionCursor, private http: HttpClient) {
     this.PlayerLoadStartedAt = new Date().getTime();
   }
 
@@ -184,6 +185,10 @@ export class ViewerService {
     };
     this.playerEvent.emit(exceptionLogEvent);
     this.videoPlayerService.error(errorCode , errorType , stacktrace);
+  }
+
+  getQuestionSet(identifier) {
+      return this.questionCursor.getQuestionSet(identifier);
   }
 
 }

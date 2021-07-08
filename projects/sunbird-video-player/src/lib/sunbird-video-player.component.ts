@@ -35,8 +35,9 @@ export class SunbirdVideoPlayerComponent implements OnInit, AfterViewInit, OnDes
   private unlistenTouchStart: () => void;
   private unlistenMouseMove: () => void;
   isPaused = false;
-
+  showQumlPlayer = false;
   QumlPlayerConfig = data1;
+  videoInstance: any;
 
 
   constructor(
@@ -193,5 +194,22 @@ export class SunbirdVideoPlayerComponent implements OnInit, AfterViewInit, OnDes
 
   getTelemetryEvents(event) {
     console.log('event is for telemetry', JSON.stringify(event));
+  }
+
+  questionSetData(event) {
+    this.QumlPlayerConfig.metadata = event.questionSet;
+    this.showQumlPlayer = true;
+    this.videoInstance.pause();
+    this.videoInstance.controls(false);
+
+    setTimeout(() => {
+      this.showQumlPlayer = false;
+      this.videoInstance.play();
+      this.videoInstance.controls(true);
+    }, 5000);
+  }
+
+  playerInstance(event) {
+    this.videoInstance = event;
   }
 }
