@@ -1,7 +1,7 @@
-<div class="sunbird-video-player-container" #videoPlayer>
+<div class="sunbird-video-player-container" #videoPlayer [ngClass]="showQumlPlayer ? 'videoPlayerHide': 'videoPlayerShow'">
       <sb-player-side-menu-icon class="sb-player-side-menu-icon notVisible" (sidebarMenuEvent)="viewerService.raiseHeartBeatEvent($event); sidebarMenuEvent($event);"
             *ngIf="viewState ==='player'" [ngClass]="{'isVisible': showControls}"></sb-player-side-menu-icon>
-      <video-player *ngIf="viewState === 'player'">
+      <video-player *ngIf="viewState === 'player'" (questionSetData)="questionSetData($event)" (playerInstance)="playerInstance($event)" >
       </video-player>
       <sb-player-sidebar *ngIf="viewState ==='player'"
        [title]="viewerService.contentName"
@@ -12,6 +12,6 @@
       <sb-player-contenterror *ngIf="showContentError"></sb-player-contenterror>
 </div>
 
-<div class="sunbird-video-player-container">
+<div class="sunbird-video-player-container" *ngIf="showQumlPlayer" #qumlPlayer>
       <quml-player [QumlPlayerConfig]="QumlPlayerConfig" (playerEvent)="getPlayerEvents($event)" (telemetryEvent)="getTelemetryEvents($event)"></quml-player>
 </div>

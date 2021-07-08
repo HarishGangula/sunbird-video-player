@@ -472,6 +472,35 @@ export class QuestionCursorImplementationService implements QuestionCursor {
         }
     }
 
+    getQuestionSet(identifier: string): Observable<any> {
+      // if (this.listUrl) {
+          const option: any = {
+              url: `action/questionset/v1/hierarchy/${identifier}`,
+              param: { mode: 'edit' }
+          };
+          return this.get(option).pipe(map((data) => {
+              return data.result;
+          }));
+      // } else {
+      //     return of(this.questionsArray[0]);
+      // }
+  }
+
+  private get(requestParam): Observable<any> {
+    const httpOptions = {
+        headers: { 'Content-Type': 'application/json' },
+        params: requestParam.param
+    };
+    return this.http.get(requestParam.url, httpOptions).pipe(
+        mergeMap((data: any) => {
+            if (data.responseCode !== 'OK') {
+                return observableThrowError(data);
+            }
+            return of(data);
+        }));
+  }
+
+
     private post(requestParam): Observable<any> {
         const httpOptions = {
             headers: { 'Content-Type': 'application/json' }

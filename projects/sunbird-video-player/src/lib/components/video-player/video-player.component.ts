@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild,
+  ViewEncapsulation, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { ViewerService } from '../../services/viewer.service';
 import { QuestionService } from '../../services/question/question.service';
 
@@ -9,6 +10,8 @@ import { QuestionService } from '../../services/question/question.service';
   encapsulation: ViewEncapsulation.None
 })
 export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
+  @Output() questionSetData = new EventEmitter();
+  @Output() playerInstance = new EventEmitter();
   showBackwardButton = false;
   showForwardButton = false;
   showPlayButton = true;
@@ -56,14 +59,16 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
           },
           onMarkerReached: ({time, text, identifier}) => {
             console.log(identifier);
-            this.questionService.readQuestion(identifier).subscribe(
+            this.viewerService.getQuestionSet(identifier).subscribe(
               (response) => {
+                this.questionSetData.emit(response);
                 console.log(response);
               }, (error) => {
                 console.log(error);
               }
             );
           }});
+        this.playerInstance.emit(this.player);
       }
       this.registerEvents();
     });
