@@ -56,16 +56,17 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
             'bottom': '39%',
             'background-color': 'orange'
           },
-          onMarkerReached: ({time, text, identifier}) => {
-            console.log(identifier);
-            this.viewerService.getQuestionSet(identifier).subscribe(
-              (response) => {
-                this.questionSetData.emit(response);
-                console.log(response);
-              }, (error) => {
-                console.log(error);
-              }
-            );
+          onMarkerReached: ({time, text, identifier, duration}) => {
+            if (!(this.player.currentTime() > (time + duration))) {
+              this.viewerService.getQuestionSet(identifier).subscribe(
+                (response) => {
+                  this.questionSetData.emit(response);
+                  console.log(response);
+                }, (error) => {
+                  console.log(error);
+                }
+              );
+            }
           }});
         this.playerInstance.emit(this.player);
       }

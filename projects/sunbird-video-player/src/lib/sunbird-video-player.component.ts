@@ -197,7 +197,11 @@ export class SunbirdVideoPlayerComponent implements OnInit, AfterViewInit, OnDes
   }
 
   questionSetData(event) {
+
     this.QumlPlayerConfig.metadata = event.questionSet;
+    this.QumlPlayerConfig.metadata['showStartPage'] = 'No';
+    this.QumlPlayerConfig.metadata['showEndPage'] = 'No';
+
     this.showQumlPlayer = true;
     this.videoInstance.pause();
     this.videoInstance.controls(false);
@@ -206,7 +210,7 @@ export class SunbirdVideoPlayerComponent implements OnInit, AfterViewInit, OnDes
       this.showQumlPlayer = false;
       this.videoInstance.play();
       this.videoInstance.controls(true);
-    }, 5000);
+    }, 10000);
   }
 
   playerInstance(event) {

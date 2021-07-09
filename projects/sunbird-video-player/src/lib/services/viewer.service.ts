@@ -49,19 +49,22 @@ export class ViewerService {
     this.interceptionPoints = metadata.interceptionPoints || {
       items: [{
         type: 'QuestionSet',
-        interceptionPoint: 300,
-        identifier: 'do_113286144302735360169',
-      }, {
-        type: 'QuestionSet',
         interceptionPoint: 100,
         identifier: 'do_1132862557288939521118',
-        objectType: 'QuestionSet'
+        objectType: 'QuestionSet',
+        duration: 3
       }, {
         type: 'QuestionSet',
         interceptionPoint: 200,
         identifier: 'do_1132733955727605761112',
-        objectType: 'QuestionSet'
-      }]
+        objectType: 'QuestionSet',
+        duration: 3
+      }, {
+        type: 'QuestionSet',
+        interceptionPoint: 300,
+        identifier: 'do_113286144302735360169',
+        duration: 3
+      } ]
     };
     if (context.userData) {
       const { userData: { firstName, lastName } } = context;
@@ -100,8 +103,8 @@ export class ViewerService {
 
   getMarkers()  {
     if (this.interceptionPoints) {
-      return this.interceptionPoints.items.map(item => {
-        return { time: item.interceptionPoint, text: '', identifier: item.identifier };
+      return this.interceptionPoints.items.map(({interceptionPoint, identifier, duration}) => {
+        return { time: interceptionPoint, text: '', identifier, duration };
       });
     }
     return null;
