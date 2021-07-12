@@ -4,7 +4,6 @@ import { SunbirdVideoPlayerModule} from '@project-sunbird/sunbird-video-player-v
 import { AppComponent } from './app.component';
 import { QuestionCursor } from '@project-sunbird/sunbird-quml-player-v9';
 import { QuestionCursorImplementationService } from './question-cursor-implementation.service';
-
 @NgModule({
   declarations: [
     AppComponent
@@ -13,7 +12,7 @@ import { QuestionCursorImplementationService } from './question-cursor-implement
     BrowserModule,
     SunbirdVideoPlayerModule
   ],
-  providers: [{ provide: QuestionCursor, useExisting: QuestionCursorImplementationService }],
+  providers: [{ provide: QuestionCursor, useClass: QuestionCursorImplementationService }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

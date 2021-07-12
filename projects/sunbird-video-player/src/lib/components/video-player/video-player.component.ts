@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild,
-  ViewEncapsulation, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild, ViewEncapsulation, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { ViewerService } from '../../services/viewer.service';
 
 @Component({
@@ -48,26 +47,30 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
       }, function onLoad() {
 
       });
-      const markers = this.viewerService.getMarkers();
+      const markers = this.viewerService.getMarkers()
       if (markers) {
-        this.player.markers( {markers,
+        this.player.markers({
+          markers,
           markerStyle: {
             'height': '7px',
             'bottom': '39%',
             'background-color': 'orange'
           },
-          onMarkerReached: ({time, text, identifier, duration}) => {
-            if (!(this.player.currentTime() > (time + duration))) {
-              this.viewerService.getQuestionSet(identifier).subscribe(
-                (response) => {
-                  this.questionSetData.emit(response);
-                  console.log(response);
-                }, (error) => {
-                  console.log(error);
-                }
-              );
+          onMarkerReached: (marker) => {
+            if(marker){
+              const { time, text, identifier, duration } = marker;
+              if (!(this.player.currentTime() > (time + duration))) {
+                this.viewerService.getQuestionSet(identifier).subscribe(
+                  (response) => {
+                    this.questionSetData.emit({response, time, identifier});
+                  }, (error) => {
+                    console.log(error);
+                  }
+                );
+              }
             }
-          }});
+          }
+        });
         this.playerInstance.emit(this.player);
       }
       this.registerEvents();
@@ -106,7 +109,7 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
 
     this.player.on('fullscreenchange', (data) => {
       // This code is to show the controldiv in fullscreen mode
-      if(this.player.isFullscreen()) {
+      if (this.player.isFullscreen()) {
         this.target.nativeElement.parentNode.appendChild(this.controlDiv.nativeElement);
       }
       this.viewerService.raiseHeartBeatEvent('FULLSCREEN');
@@ -224,6 +227,18 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
       }
       this.viewerService.totalSeekedLength = this.totalSeekedLength;
       this.seekStart = null;
+      if(this.player.markers && this.player.markers.getMarkers) {
+        const markers = this.player.markers.getMarkers()
+        markers.forEach(marker => {
+          if(!this.viewerService.interceptionResponses[marker.time] && marker.time < this.currentTime) {
+            this.viewerService.interceptionResponses[marker.time] = {
+              score: 0,
+              isSkipped: false
+            }
+            document.querySelector(`[data-marker-time="${marker.time}"]`)['style'].backgroundColor = "red";
+          }
+        });
+      }
     }
   }
 

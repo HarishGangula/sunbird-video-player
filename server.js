@@ -3,8 +3,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     proxy = require('express-http-proxy'),
     urlHelper = require('url');
-const host = 'dev.sunbirded.org';
-const dock_host = 'dock.sunbirded.org'
+const host = 'staging.sunbirded.org';
 var app = express();
 app.set('port', 3000);
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -27,9 +26,10 @@ app.use(['/action/questionset/v1/*',
         // you can update headers
         proxyReqOpts.headers['Content-Type'] = 'application/json';
         // proxyReqOpts.headers['user-id'] = 'content-editor';
-        proxyReqOpts.headers['Cookie'] = ""
-        proxyReqOpts.headers['authorization'] = '';
-        proxyReqOpts.headers['x-authenticated-user-token'] = '';
+        // proxyReqOpts.headers['Cookie'] = ""
+        // proxyReqOpts.headers['authorization'] = '';
+        // proxyReqOpts.headers['x-authenticated-user-token'] = '';
+
         return proxyReqOpts;
     }
 }));

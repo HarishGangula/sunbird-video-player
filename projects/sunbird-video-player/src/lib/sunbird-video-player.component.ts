@@ -3,6 +3,7 @@ import {
   HostListener, ElementRef, ViewChild, AfterViewInit, Renderer2, OnDestroy
 } from '@angular/core';
 import { ErrorService , errorCode , errorMessage } from '@project-sunbird/sunbird-player-sdk-v9';
+import { identity } from 'rxjs';
 
 import { PlayerConfig } from './playerInterfaces';
 import { ViewerService } from './services/viewer.service';
@@ -36,9 +37,10 @@ export class SunbirdVideoPlayerComponent implements OnInit, AfterViewInit, OnDes
   private unlistenMouseMove: () => void;
   isPaused = false;
   showQumlPlayer = false;
-  QumlPlayerConfig = data1;
+  QumlPlayerConfig :any = {};
   videoInstance: any;
-
+  currentInterceptionTime;
+  currentInterceptionUIId;
 
   constructor(
     public videoPlayerService: SunbirdVideoPlayerService,
@@ -106,6 +108,8 @@ export class SunbirdVideoPlayerComponent implements OnInit, AfterViewInit, OnDes
     this.viewerService.initialize(this.playerConfig);
     this.videoPlayerService.initialize(this.playerConfig);
     window.addEventListener('offline', this.raiseInternetDisconnectionError , true);
+    this.QumlPlayerConfig.config = this.playerConfig.config;
+    this.QumlPlayerConfig.context = this.playerConfig.context;
   }
 
   raiseInternetDisconnectionError = () => {
@@ -178,6 +182,40 @@ export class SunbirdVideoPlayerComponent implements OnInit, AfterViewInit, OnDes
     a.click();
     a.remove();
     this.viewerService.raiseHeartBeatEvent('DOWNLOAD');
+  }
+
+
+
+  qumlPlayerEvents(event) {
+    if(event.eid === "QUML_SUMMARY"){
+      const score = parseInt(event.edata.extra.find(p => p.id === "score")["value"],10)
+      this.viewerService.interceptionResponses[this.currentInterceptionTime] = {
+        score,
+        isSkipped: false
+      }
+      document.querySelector(`[data-marker-time="${this.currentInterceptionTime}"]`)['style'].backgroundColor = "green";
+      this.showQumlPlayer = false;
+      this.videoInstance.play();
+      this.videoInstance.controls(true);
+    }
+  }
+
+
+  questionSetData({response, time,identifier}) {
+
+    this.QumlPlayerConfig.metadata = response.questionSet;
+    this.QumlPlayerConfig.metadata['showStartPage'] = 'No';
+    this.QumlPlayerConfig.metadata['showEndPage'] = 'No';
+    this.currentInterceptionTime = time
+    this.currentInterceptionUIId = identifier;
+    this.showQumlPlayer = true;
+    this.videoInstance.pause();
+    this.videoInstance.controls(false);
+
+  }
+
+  playerInstance(event) {
+    this.videoInstance = event;
   }
 
   @HostListener('window:beforeunload')

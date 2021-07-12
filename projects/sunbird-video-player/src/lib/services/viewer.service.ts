@@ -32,8 +32,13 @@ export class ViewerService {
   public traceId: string;
   public isAvailableLocally = false;
   public interceptionPoints: any;
-  constructor(private videoPlayerService: SunbirdVideoPlayerService, private utilService: UtilService,
-              public questionCursor: QuestionCursor, private http: HttpClient) {
+  public interceptionResponses: any = {};
+  public showScore = false;
+  public scoreObtained:any = 0;
+  constructor(private videoPlayerService: SunbirdVideoPlayerService,
+    private utilService: UtilService,
+    private http: HttpClient,
+    public questionCursor: QuestionCursor) {
     this.PlayerLoadStartedAt = new Date().getTime();
   }
 
@@ -103,16 +108,17 @@ export class ViewerService {
 
   getMarkers()  {
     if (this.interceptionPoints) {
+      this.showScore = true;
       return this.interceptionPoints.items.map(({interceptionPoint, identifier, duration}) => {
-        return { time: interceptionPoint, text: '', identifier, duration };
+        return { time: interceptionPoint, text: '', identifier, duration: 3 };
       });
     }
     return null;
   }
 
 
-  public pageSessionUpdate() {
-
+  getQuestionSet(identifier) {
+    return this.questionCursor.getQuestionSet(identifier);
   }
 
   raiseStartEvent(event) {
@@ -132,7 +138,13 @@ export class ViewerService {
     this.PlayerLoadStartedAt = new Date().getTime();
   }
 
+  calculateScore() {
+
+    this.scoreObtained =  Object.values(this.interceptionResponses).reduce(
+      (acc, response) => acc + response['score'] ,0);
+  }
   raiseEndEvent() {
+    this.calculateScore()
     const duration = new Date().getTime() - this.PlayerLoadStartedAt;
     const endEvent = {
       eid: 'END',
@@ -187,10 +199,6 @@ export class ViewerService {
     };
     this.playerEvent.emit(exceptionLogEvent);
     this.videoPlayerService.error(errorCode , errorType , stacktrace);
-  }
-
-  getQuestionSet(identifier) {
-      return this.questionCursor.getQuestionSet(identifier);
   }
 
 }

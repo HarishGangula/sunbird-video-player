@@ -6,12 +6,18 @@
       <sb-player-sidebar *ngIf="viewState ==='player'"
        [title]="viewerService.contentName"
       (sidebarEvent)="sideBarEvents($event)" [config]="sideMenuConfig"></sb-player-sidebar>
-      <sb-player-end-page [contentName]="viewerService.contentName" [nextContent]="nextContent" [userName]="viewerService.userName" [showExit]="sideMenuConfig.showExit"
-            [timeSpentLabel]="viewerService.timeSpent" (playNextContent)="playContent($event)" (exitContent)="exitContent($event)"   (replayContent)="replayContent($event)"
+      <sb-player-end-page
+      [contentName]="viewerService.contentName"
+      [outcomeLabel]="viewerService.showScore ? 'Score: ': ''"
+      [outcome]="viewerService.scoreObtained +''"
+      [nextContent]="nextContent" [userName]="viewerService.userName"
+      [showExit]="sideMenuConfig.showExit"
+            [timeSpentLabel]="viewerService.timeSpent" (playNextContent)="playContent($event)"
+            (exitContent)="exitContent($event)"   (replayContent)="replayContent($event)"
             *ngIf="viewState === 'end'"></sb-player-end-page>
       <sb-player-contenterror *ngIf="showContentError"></sb-player-contenterror>
 </div>
 
 <div class="sunbird-video-player-container" *ngIf="showQumlPlayer" #qumlPlayer>
-      <quml-player [QumlPlayerConfig]="QumlPlayerConfig" (playerEvent)="getPlayerEvents($event)" (telemetryEvent)="getTelemetryEvents($event)"></quml-player>
+      <quml-player [QumlPlayerConfig]="QumlPlayerConfig" (playerEvent)="qumlPlayerEvents($event)"></quml-player>
 </div>

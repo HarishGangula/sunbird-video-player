@@ -1,15 +1,13 @@
 import { QuestionCursor } from '@project-sunbird/sunbird-quml-player-v9';
 import { HttpClient } from '@angular/common/http';
 import { mergeMap, map } from 'rxjs/operators';
-import { of, throwError as observableThrowError, Observable } from 'rxjs';
+import { of, throwError as observableThrowError, Observable, forkJoin } from 'rxjs';
 import * as _ from 'lodash-es';
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-@Injectable({
-    providedIn: 'root'
-  })
+@Injectable()
 export class QuestionCursorImplementationService implements QuestionCursor {
-    listUrl: string; // Define this url to call list api in server
+    listUrl = 'action/question/v1/list'; // Define this url to call list api in server
     questionsArray = {
         questions: [{
             copyright: 'tn',
@@ -436,6 +434,24 @@ export class QuestionCursorImplementationService implements QuestionCursor {
     };
     constructor(private http: HttpClient) { }
 
+    getQuestionSet(identifier) {
+        // if (this.listUrl) {
+           const hierarchy =  this.http.get("https://staging.sunbirded.org/learner/questionset/v1/hierarchy/"+identifier)
+           const questionSet = this.http.get(`https://staging.sunbirded.org/api/questionset/v1/read/${identifier}?fields=instructions`)
+            return (
+                forkJoin([hierarchy, questionSet]).pipe(
+                    map(res => {
+                        let questionSet =  res[0]['result']['questionSet'];
+                        if(res[1]['result']['questionset']['instructions'] && questionSet) {
+                            questionSet['instructions']
+                        }
+                        return {questionSet}
+                    })
+                ))
+
+        // }
+    }
+
     getQuestions(identifiers: string[]): Observable<any> {
         if (this.listUrl) {
             const option: any = {
@@ -471,35 +487,6 @@ export class QuestionCursorImplementationService implements QuestionCursor {
             return of(this.questionsArray[0]);
         }
     }
-
-    getQuestionSet(identifier: string): Observable<any> {
-      // if (this.listUrl) {
-          const option: any = {
-              url: `action/questionset/v1/hierarchy/${identifier}`,
-              param: { mode: 'edit' }
-          };
-          return this.get(option).pipe(map((data) => {
-              return data.result;
-          }));
-      // } else {
-      //     return of(this.questionsArray[0]);
-      // }
-  }
-
-  private get(requestParam): Observable<any> {
-    const httpOptions = {
-        headers: { 'Content-Type': 'application/json' },
-        params: requestParam.param
-    };
-    return this.http.get(requestParam.url, httpOptions).pipe(
-        mergeMap((data: any) => {
-            if (data.responseCode !== 'OK') {
-                return observableThrowError(data);
-            }
-            return of(data);
-        }));
-  }
-
 
     private post(requestParam): Observable<any> {
         const httpOptions = {

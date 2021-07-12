@@ -16,7 +16,6 @@ import { QumlLibraryModule } from '@project-sunbird/sunbird-quml-player-v9';
     HttpClientModule,
     SunbirdPlayerSdkModule,
     QumlLibraryModule,
-    SunbirdPlayerSdkModule,
   ],
   providers: [ErrorService],
   exports: [SunbirdVideoPlayerComponent , SunbirdPlayerSdkModule]
