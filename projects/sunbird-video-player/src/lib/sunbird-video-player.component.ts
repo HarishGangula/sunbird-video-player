@@ -8,7 +8,7 @@ import { identity } from 'rxjs';
 import { PlayerConfig } from './playerInterfaces';
 import { ViewerService } from './services/viewer.service';
 import { SunbirdVideoPlayerService } from './sunbird-video-player.service';
-
+import { keys, has } from 'lodash-es';
 import { data1 } from './quml-library-data';
 
 @Component({
@@ -110,6 +110,7 @@ export class SunbirdVideoPlayerComponent implements OnInit, AfterViewInit, OnDes
     window.addEventListener('offline', this.raiseInternetDisconnectionError , true);
     this.QumlPlayerConfig.config = this.playerConfig.config;
     this.QumlPlayerConfig.context = this.playerConfig.context;
+    this.setTelemetryObjectRollup(this.playerConfig.metadata.identifier)
   }
 
   raiseInternetDisconnectionError = () => {
@@ -197,13 +198,14 @@ export class SunbirdVideoPlayerComponent implements OnInit, AfterViewInit, OnDes
       this.showQumlPlayer = false;
       this.videoInstance.play();
       this.videoInstance.controls(true);
+      this.viewerService.preFetchContent()
     }
   }
 
 
   questionSetData({response, time,identifier}) {
 
-    this.QumlPlayerConfig.metadata = response.questionSet;
+    this.QumlPlayerConfig.metadata = response;
     this.QumlPlayerConfig.metadata['showStartPage'] = 'No';
     this.QumlPlayerConfig.metadata['showEndPage'] = 'No';
     this.currentInterceptionTime = time
@@ -212,6 +214,17 @@ export class SunbirdVideoPlayerComponent implements OnInit, AfterViewInit, OnDes
     this.videoInstance.pause();
     this.videoInstance.controls(false);
 
+  }
+
+  setTelemetryObjectRollup(id) {
+    if(this.QumlPlayerConfig.context) {
+      const hasObjectRollup = has(this.QumlPlayerConfig, 'context.objectRollup')
+      if(!hasObjectRollup) {
+        this.QumlPlayerConfig.context.objectRollup = {}
+      }
+      const levels = keys(this.QumlPlayerConfig.context.objectRollup)
+      this.QumlPlayerConfig.context.objectRollup[`l${levels.length +  1}`] = id
+    }
   }
 
   playerInstance(event) {

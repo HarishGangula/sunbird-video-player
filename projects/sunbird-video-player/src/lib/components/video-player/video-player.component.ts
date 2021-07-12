@@ -72,6 +72,8 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
           }
         });
         this.playerInstance.emit(this.player);
+        this.viewerService.playerInstance = this.player;
+        this.viewerService.preFetchContent();
       }
       this.registerEvents();
     });

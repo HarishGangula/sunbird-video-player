@@ -6,6 +6,9 @@ import { UtilService } from './util.service';
 import { errorCode , errorMessage } from '@project-sunbird/sunbird-player-sdk-v9';
 import { QuestionCursor } from '@project-sunbird/sunbird-quml-player-v9';
 
+import { find, isEmpty, get } from 'lodash-es';
+import { of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -35,6 +38,8 @@ export class ViewerService {
   public interceptionResponses: any = {};
   public showScore = false;
   public scoreObtained:any = 0;
+  public playerInstance: any;
+  public contentMap = {};
   constructor(private videoPlayerService: SunbirdVideoPlayerService,
     private utilService: UtilService,
     private http: HttpClient,
@@ -118,7 +123,34 @@ export class ViewerService {
 
 
   getQuestionSet(identifier) {
-    return this.questionCursor.getQuestionSet(identifier);
+    const content = this.contentMap[identifier];
+    if(isEmpty(content)) {
+     this.questionCursor.getQuestionSet(identifier).subscribe(
+       (response) => {
+        this.contentMap[identifier] = get(response, 'questionSet');
+        return of(this.contentMap[identifier])
+       }
+     )
+    } else {
+      return of(content);
+    }
+  }
+
+  preFetchContent() {
+    const nextMarker = this.getNextMarker()
+    if(!isEmpty(nextMarker)) {
+      const identifier = nextMarker.identifier;
+      this.getQuestionSet(nextMarker.identifier)
+    }
+  }
+
+  getNextMarker() {
+    var currentTime = this.playerInstance.currentTime();
+    const markersList = this.getMarkers()
+    return find(markersList, marker => {
+      const markerTime = marker.time;
+      return markerTime > currentTime
+    })
   }
 
   raiseStartEvent(event) {
