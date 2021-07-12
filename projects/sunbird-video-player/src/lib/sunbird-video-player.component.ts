@@ -109,6 +109,7 @@ export class SunbirdVideoPlayerComponent implements OnInit, AfterViewInit, OnDes
     this.videoPlayerService.initialize(this.playerConfig);
     window.addEventListener('offline', this.raiseInternetDisconnectionError , true);
     this.QumlPlayerConfig.config = this.playerConfig.config;
+    this.QumlPlayerConfig.config.sideMenu.enable = false;
     this.QumlPlayerConfig.context = this.playerConfig.context;
     this.setTelemetryObjectRollup(this.playerConfig.metadata.identifier)
   }

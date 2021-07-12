@@ -192,11 +192,16 @@ export class ViewerService {
     this.playerEvent.emit(endEvent);
     this.timeSpent = this.utilService.getTimeSpentText(this.visitedLength);
     this.videoPlayerService.end(duration, this.totalLength, this.currentlength, this.endPageSeen, this.totalSeekedLength,
-      this.visitedLength / 1000);
+      this.visitedLength / 1000, this.scoreObtained);
   }
 
 
   raiseHeartBeatEvent(type: string) {
+    if(type === "REPLAY") {
+      this.interceptionResponses = {};
+      this.showScore = false;
+      this.scoreObtained = 0;
+    }
     const hearBeatEvent = {
       eid: 'HEARTBEAT',
       ver: this.version,
