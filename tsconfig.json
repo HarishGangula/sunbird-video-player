@@ -13,7 +13,7 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "skipLibCheck": true,
-    "target": "es2020",
+    "target": "ES2022",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -34,12 +34,13 @@
       "@project-sunbird/sunbird-video-player-v9/*": [
         "dist/sunbird-video-player/*"
       ],
-      "video.js":[
+      "video.js": [
         "node_modules/video.js"
       ],
-      "video.js/*":[
+      "video.js/*": [
         "node_modules/video.js/*"
       ]
-    }
+    },
+    "useDefineForClassFields": false
   }
 }
