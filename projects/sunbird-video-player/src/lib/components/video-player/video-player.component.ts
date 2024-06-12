@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild, ViewEncapsulation, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { ViewerService } from '../../services/viewer.service';
+
 @Component({
   selector: 'video-player',
   templateUrl: './video-player.component.html',
@@ -63,7 +64,7 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
                   (response) => {
                     this.questionSetData.emit({response, time, identifier});
                   }, (error) => {
-                    console.log(error); 
+                    console.log(error);
                   }
                 );
               }
@@ -71,6 +72,8 @@ export class VideoPlayerComponent implements AfterViewInit, OnDestroy {
           }
         });
         this.playerInstance.emit(this.player);
+        this.viewerService.playerInstance = this.player;
+        this.viewerService.preFetchContent();
       }
       this.registerEvents();
     });

@@ -6,13 +6,13 @@
       <sb-player-sidebar *ngIf="viewState ==='player'"
        [title]="viewerService.contentName"
       (sidebarEvent)="sideBarEvents($event)" [config]="sideMenuConfig"></sb-player-sidebar>
-      <sb-player-end-page 
-      [contentName]="viewerService.contentName" 
-      [outcomeLabel]="viewerService.showScore ? 'Score: ': ''" 
+      <sb-player-end-page
+      [contentName]="viewerService.contentName"
+      [outcomeLabel]="viewerService.showScore ? 'Score: ': ''"
       [outcome]="viewerService.scoreObtained +''"
-      [nextContent]="nextContent" [userName]="viewerService.userName" 
+      [nextContent]="nextContent" [userName]="viewerService.userName"
       [showExit]="sideMenuConfig.showExit"
-            [timeSpentLabel]="viewerService.timeSpent" (playNextContent)="playContent($event)" 
+            [timeSpentLabel]="viewerService.timeSpent" (playNextContent)="playContent($event)"
             (exitContent)="exitContent($event)"   (replayContent)="replayContent($event)"
             *ngIf="viewState === 'end'"></sb-player-end-page>
       <sb-player-contenterror *ngIf="showContentError"></sb-player-contenterror>

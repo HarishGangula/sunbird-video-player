@@ -29,7 +29,7 @@ app.use(['/action/questionset/v1/*',
         // proxyReqOpts.headers['Cookie'] = ""
         // proxyReqOpts.headers['authorization'] = '';
         // proxyReqOpts.headers['x-authenticated-user-token'] = '';
-        
+
         return proxyReqOpts;
     }
 }));
