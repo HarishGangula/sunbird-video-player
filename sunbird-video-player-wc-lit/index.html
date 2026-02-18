@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunbird Video Player Web Component</title>
+    <!-- Video.js CSS -->
+    <link href="https://vjs.zencdn.net/7.18.1/video-js.css" rel="stylesheet" />
+    <style>
+        body { margin: 0; padding: 20px; font-family: sans-serif; }
+        sunbird-video-player { width: 100%; height: 500px; display: block; background: #000; }
+    </style>
+</head>
+<body>
+    <h1>Sunbird Video Player Web Component Demo</h1>
+    <sunbird-video-player id="player"></sunbird-video-player>
+
+    <script type="module">
+        import './src/sunbird-video-player.ts';
+
+        const player = document.getElementById('player');
+
+        const playerConfig = {
+            context: {
+                mode: 'play',
+                authToken: '',
+                sid: '7283cf2e-d215-9944-b0c5-269489c6fa56',
+                did: '3c0a3724311fe944dec5df559424df23',
+                uid: 'anonymous',
+                channel: '505c7c48ac6dc1edc9b08f21db5a571d',
+                pdata: { id: 'prod.diksha.portal', pid: 'sunbird.contentplayer', ver: '3.2.12' },
+                contextRollup: { l1: '505c7c48ac6dc1edc9b08f21db5a571d' },
+                tags: [ '505c7c48ac6dc1edc9b08f21db5a571d' ],
+                cdata: [],
+                timeDiff: 0,
+                objectRollup: {},
+                host: '',
+                endpoint: '/data/v3/telemetry',
+                userData: { firstName: 'Test', lastName: 'User' }
+            },
+            config: {
+                traceId: 'afhjgh',
+                sideMenu: {
+                    showShare: true,
+                    showDownload: true,
+                    showReplay: true,
+                    showExit: true
+                }
+            },
+            metadata: {
+                identifier: 'do_3130932073505546241180',
+                name: 'Test Video',
+                artifactUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                streamingUrl: '',
+                mimeType: 'video/mp4',
+                isAvailableLocally: false,
+                pkgVersion: 1
+            }
+        };
+
+        player.playerConfig = playerConfig;
+
+        player.addEventListener('playerEvent', (event) => {
+            console.log('Player Event:', event.detail);
+        });
+
+        player.addEventListener('telemetryEvent', (event) => {
+            console.log('Telemetry Event:', event.detail);
+        });
+    </script>
+</body>
+</html>
