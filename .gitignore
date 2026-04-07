@@ -46,3 +46,4 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+sunbird-video-player-wc-lit/node_modules/

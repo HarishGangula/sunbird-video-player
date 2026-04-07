@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sunbird Video Player Web Component (Lit)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./src/styles.css">
+  <style>
+    /* Example of falling back / overriding CSS Variables */
+    :root {
+      --sb-primary-color: #f59e0b;
+    }
+    body {
+      font-family: sans-serif;
+      margin: 20px;
+      background: #f0f0f0;
+    }
+    .player-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      height: 450px;
+      border: 2px solid var(--sb-primary-color);
+    }
+    .events-log {
+      max-width: 800px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 10px;
+      border: 1px solid #ccc;
+      height: 200px;
+      overflow-y: scroll;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+  <h1 style="text-align: center; color: var(--sb-primary-color);">Sunbird Video Player Web Component</h1>
+
+  <div class="player-wrapper">
+    <!-- Our custom element -->
+    <sunbird-video-player id="my-player"></sunbird-video-player>
+  </div>
+
+  <div class="events-log" id="logs">
+    <h3>Events Log:</h3>
+    <ul id="logList"></ul>
+  </div>
+
+  <script type="module" src="./src/index.ts"></script>
+
+  <script>
+    const playerConfig = {
+      context: {
+        telemetry: {
+          pdata: { id: "sunbird.video.player", ver: "1.0", pid: "sunbird-video-player-wc-lit" },
+          env: "sunbird-video-player",
+          channel: "sunbird",
+          did: "20d63257084c2dca33f31a8f14d8e94c089343c5",
+          uid: "anonymous",
+          sid: "85e8a2c8-bb8e-4666-a21b-c29ec590d740",
+        },
+        env: "sunbird-video-player",
+        cdata: [{ id: "sunbird-video-player", type: "Player" }],
+      },
+      config: {
+        traceId: "afjkh23-234-234-234",
+        sideMenu: {
+          showShare: true,
+          showDownload: true,
+          showReplay: true,
+          showExit: true
+        }
+      },
+      metadata: {
+        identifier: "do_1131972046632632321119",
+        name: "Test Video",
+        mimeType: "video/mp4",
+        artifactUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
+        isAvailableLocally: false,
+        interceptionPoints: {
+           items: [
+              { interceptionPoint: 5, identifier: "q1", type: "QuestionSet" }
+           ]
+        },
+        transcripts: []
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const playerElement = document.getElementById('my-player');
+      const logList = document.getElementById('logList');
+
+      function logEvent(msg) {
+        const li = document.createElement('li');
+        li.textContent = msg;
+        logList.appendChild(li);
+        logList.scrollTop = logList.scrollHeight;
+      }
+
+      if (playerElement) {
+        playerElement.playerConfig = playerConfig;
+
+        playerElement.addEventListener('playerEvent', (e) => {
+           logEvent(`[Player Event] ${e.detail.type}`);
+        });
+
+        playerElement.addEventListener('telemetryEvent', (e) => {
+           logEvent(`[Telemetry Event] ${e.detail.eid} - ${e.detail.edata?.type || e.detail.type}`);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
