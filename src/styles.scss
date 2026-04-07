@@ -1,9 +1,0 @@
-/* You can add global styles to this file, and also import other style files */
-
-html.PlayerMediaQueryClass {
-    font-size: calc(12px + (18 - 12) * ((100vw - 320px) / (1920 - 320)));
-  }
-
-body {
-    background: white !important; 
-}
