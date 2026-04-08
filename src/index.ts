@@ -200,8 +200,8 @@ export class SunbirdVideoPlayer extends LitElement {
         return `vjs-icon-replay ${super.buildCSSClass()}`;
       }
       handleClick() {
-        const currentTime = player.currentTime();
-        player.currentTime(Math.max(0, currentTime - 10));
+        const currentTime = this.player().currentTime();
+        this.player().currentTime(Math.max(0, currentTime - 10));
       }
     }
 
@@ -214,8 +214,8 @@ export class SunbirdVideoPlayer extends LitElement {
         return `vjs-icon-forward ${super.buildCSSClass()}`;
       }
       handleClick() {
-        const currentTime = player.currentTime();
-        player.currentTime(Math.min(player.duration(), currentTime + 10));
+        const currentTime = this.player().currentTime();
+        this.player().currentTime(Math.min(this.player().duration(), currentTime + 10));
       }
     }
 
