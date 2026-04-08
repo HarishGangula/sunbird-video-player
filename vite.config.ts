@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -12,5 +13,14 @@ export default defineConfig({
       // Here we bundle them to have a standalone web component
       external: [],
     }
+  },
+  test: {
+    environment: 'jsdom',
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      include: ['src/**/*.ts'],
+    },
+    globals: true,
   }
 });
